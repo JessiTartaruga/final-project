@@ -16,6 +16,13 @@ years = []    # leere Liste
 total_pops = []    # leere Liste
 col_list = fw.columns    # Zuweisen der Spalten aus der Datei zu col_list
 
+####################################################
+# Ich hätte das hier hardgegcoded, anstelle von    #
+# "range(12,4,-1)" hätte ich einfach eine Liste    # 
+# [2022, 2020, 2015, 2010, 2000, 1990, 1980, 1970] #
+# erstellt.                                        #
+####################################################
+
 for col in range(12,4,-1):    # Spalten 5-12 durchgehen: Population Data per year; reverse Reihenfolge
     sum = fw[col_list[col]].sum()    # Summe der einzelnen Spalten errechnen (ergibt world population)
     years.append(col_list[col])    # Liste years befüllen mit Spaltentiteln
@@ -25,6 +32,16 @@ for col in range(12,4,-1):    # Spalten 5-12 durchgehen: Population Data per yea
 
 def plot_pop_year():
     '''Plottet Entwicklung der Weltbevökerung nach Jahren'''
+    ###
+    # Warum nicht einfach direkt mit dem Dataframe arbeiten? Wäre effizienter und man spart sich den ganzen oberen Teil
+    # Später arbeitest du eh mit Plotly, wenn du das von anfang an machst kannst du direkt mit dem Dataframe arbeiten:
+    # https://plotly.com/python/line-charts/
+    # z.B. 
+    # df =  fw[2022, 2020, 2015, 2010, 2000, 1990, 1980, 1970].sum().T
+    # fig = px.line(year_stats, x=year_stats.index, y=0, title='Die Weltpopulation 1970-2022')
+    # fig.show()
+    # Achtung, weil die Liste falsch herum ist, wird das Diagram falsch angezeigt, einfach die Liste drehen...
+    ###
     plt.plot(years, total_pops, 'o-g')    # Plot x=years, y=total_pops, als Punkte markiert, in Grün
     plt.title("Die Weltpopulation 1970 bis 2022", fontsize=16)    # Definiert den Titel der Figure
     plt.xlabel("Jahr", fontsize=11)    # Definiert Benennung der x-Achse
@@ -44,6 +61,10 @@ def plot_continents22():
     fig.update_traces(textinfo='label+percent+value', textfont_size=13) # Gibt neben Label(Continent) auch Percent&Value
     fig.show()
 
+####################################################
+# "plot_continents22()" funktioniert bei mir nicht #
+####################################################   
+
 def plot_worldpopulation22():
     '''Plottet Population auf Weltkarte nach Einwohnern'''
     fig1 = px.choropleth(fw,                             # Erstellt eine Choropleth Map (besteht aus bunten Polygonen)
@@ -55,6 +76,10 @@ def plot_worldpopulation22():
                          title = 'Weltbevökerung im Jahr 2022')    # Titel der Figure
     fig1.update_layout(font = dict(size = 17, family="Franklin Gothic"))    # Anpassen des Layouts
     fig1.show()    # Anzeigen der Figure
+
+######
+# Supergut!
+#äääää    
 
 '''Versuch Bevölkerungsentwicklung je Land'''
 # fw.columns = fw.columns.str.repla
@@ -83,7 +108,12 @@ print(selected_country)
 country1 = selected_country.iloc[:,9:1:-1]
 # print(selected_country.iloc[:,9:1:-1])    # Zeilen und Spalten in integer und nicht in value, integer Positionen können angesprochen werden
 
-plt.plot(country1(fw.columns), country1(fw.rows))
+############################################################################
+# Achtung "country1" ist ein DataFrame und muss mit [] eingegrenzt werden. #
+# Funktioniert bei mir trotzdem nicht, weiß nicht genau was das Ziel ist?  #
+############################################################################
+
+plt.plot(country1(fw.columns), country1(fw.rows)) 
 plt.show()
 # plotten x = columns, y = rows
 

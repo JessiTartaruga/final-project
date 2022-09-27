@@ -16,6 +16,7 @@ years = []    # leere Liste
 total_pops = []    # leere Liste
 col_list = fw.columns    # Zuweisen der Spalten aus der Datei zu col_list
 
+####################################################
 for col in range(12,4,-1):    # Spalten 5-12 durchgehen: Population Data per year; reverse Reihenfolge
     sum = fw[col_list[col]].sum()    # Summe der einzelnen Spalten errechnen (ergibt world population)
     years.append(col_list[col])    # Liste years befüllen mit Spaltentiteln
